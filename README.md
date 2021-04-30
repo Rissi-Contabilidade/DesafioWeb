@@ -78,7 +78,7 @@ Precisamos que você desenvolva uma API que cadastre, retorne, altere e exclua p
 }
 ```
 
-Qualquer dúvida, sugestão ou problema que encontrar, entre em contato nesse e-mail: **dev01@rissicontabilidade.com.br**. **Iremos te ajudar no que precisar!**
+Qualquer dúvida, sugestão ou problema que encontrar, entre em contato criando uma issue aqui neste repositorio ou nesse e-mail: **dev01@rissicontabilidade.com.br**. **Iremos te ajudar no que precisar!**
 Boa sorte e até breve!
 
 > Tente uma, duas, três vezes e se possível tente a quarta, a quinta e quantas vezes for necessário. Só não desista nas primeiras tentativas, a persistência é amiga da conquista. Se você quer chegar onde a maioria não chega, faça o que a maioria não faz.
