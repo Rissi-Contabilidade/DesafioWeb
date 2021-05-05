@@ -36,14 +36,41 @@ namespace DesafioWeb.Controllers
             return user;
         }
         
+        private ActionResult<Peoples> GetPerCpf(string cpf)
+        {
+            var user = _peopleService.GetPerCpf(cpf);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+            
+            return user;
+        }
+        
         [HttpPost]
         public ActionResult<Users> Create(Peoples people)
         {
+            var peopleDb = GetPerCpf(people.Cpf.ToString());
             var cep = _cepService.Get(Convert.ToString(people.Endereco.Cep.Cep));
+
+            if (peopleDb.Value != null && people.Cpf == peopleDb.Value.Cpf)
+            {
+                return BadRequest("Error: Já existe uma pessoa com esse cpf");
+            }
 
             if (cep != null)
             {
                 people.Endereco.Cep = cep;
+                switch (people.Sexo)
+                {
+                    case Sexo.Masculino:
+                        people.Sexo = Sexo.Masculino;
+                        break;
+                    case Sexo.Feminino:
+                        people.Sexo = Sexo.Feminino;
+                        break;
+                }
                 _peopleService.Create(people);
                 return CreatedAtRoute("GetPeople", new { id = people.Id }, people);
             }

@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
@@ -16,11 +17,8 @@ namespace DesafioWeb.Models
         [Required]
         public long Cpf { get; set; }
         
-        public enum Sexo
-        {
-            Masculino,
-            Feminino
-        }
+        [Required]
+        public Sexo Sexo { get; set; }
 
         [Required]
         public DateTime DataNascimento { get; set; }
@@ -32,6 +30,12 @@ namespace DesafioWeb.Models
         public long Telefone { get; set; }
     }
 
+    public enum Sexo
+    {
+        Masculino,
+        Feminino
+    }
+    
     public class Endereco
     {
         public Ceps Cep { get; set; }

@@ -29,7 +29,7 @@ namespace DesafioWeb.Controllers
             var cepFind = _cepService.Get(cep);
         
             if (cepFind == null)
-                return NotFound("Error: Not Found");
+                return NotFound("Error: CEP Not Found");
 
             return cepFind;
         }
