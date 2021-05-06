@@ -37,6 +37,11 @@ namespace DesafioWeb.Controllers
         [HttpPost]
         public ActionResult<Users> Create(Users user)
         {
+            var userFind = _userService.GetPerUser(user.User);
+            if (userFind != null && user.User == userFind.User)
+            {
+                return BadRequest("Error: Usuario já existe.");
+            }
             _userService.Create(user);
 
             return CreatedAtRoute("GetUser", new { id = user.Id }, user);
