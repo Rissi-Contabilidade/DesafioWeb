@@ -36,7 +36,7 @@ Precisamos que você desenvolva uma API que cadastre, retorne, altere e exclua p
 - CEP
   - Essa é uma rota que deve conter métodos para retornar o endereço a partir do cep enviado, e outro para atualizar todos os CEPs da tabela a partir de uma API de terceiros.
     - Para o retorno de endereço a partir de CEP, você deve criar um método que receba uma requisição GET com um parâmetro de CEP em string, e retornar o endereço buscando o cep no banco de dados.
-    - O outro método deve atualizar os CEPs a partir de uma API de terceiros, ela usara a API para incluir novos CEPs e atualizar algum já existente. A API que deve ser usada é a do [CEP Aberto](https://www.cepaberto.com/), ela deve ser implementada usando um modelo de serviço do ASP.NET. Esse método tem que ser GET também!
+    - O outro método deve atualizar o CEP enviado por query string a partir de uma API de terceiros, ela usara a API para incluir ou atualizar o CEP enviado. A API que deve ser usada é a do [CEP Aberto](https://www.cepaberto.com/), ela deve ser implementada usando um modelo de serviço do ASP.NET. Esse método tem que ser GET também!
 - Pessoa
   - Essa rota deve ter todas as operações para se realizar um CRUD, mas com alguns a serem observados:
     - Na criação/edição de uma pessoa, ela deve enviar apenas: nome, CPF, sexo, data de nascimento, cep, complemento, número e telefone. Caso não tenha um CEP cadastrado no banco, deve retornar uma mensagem de erro informando que não existe o CEP na base.
