@@ -1,9 +1,10 @@
 using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace DesafioWeb.Models
 {
@@ -18,6 +19,7 @@ namespace DesafioWeb.Models
         public long Cpf { get; set; }
         
         [Required]
+        [BsonRepresentation(representation: BsonType.String)]
         public Sexo Sexo { get; set; }
 
         [Required]
@@ -30,9 +32,12 @@ namespace DesafioWeb.Models
         public long Telefone { get; set; }
     }
 
+    [JsonConverter(converterType: typeof(StringEnumConverter))]
     public enum Sexo
     {
+        [EnumMember(Value = "Masculino")]
         Masculino,
+        [EnumMember(Value = "Feminino")]
         Feminino
     }
     
