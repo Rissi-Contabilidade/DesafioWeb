@@ -52,6 +52,11 @@ namespace DesafioWeb.Controllers
             var response = client.Get(request).Content;
             JObject json = JObject.Parse(response);
 
+            if (response == "{}")
+            {
+                return NotFound("CEP inexistente.");
+            }
+
             var cidadeApi = json["cidade"]["nome"].ToString();
             var cepApi = Convert.ToInt64(json["cep"].ToString());
             var logadrouroApi = json["logradouro"].ToString();
