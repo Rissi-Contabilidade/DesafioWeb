@@ -2,23 +2,24 @@ using System;
 using System.Collections.Generic;
 using DesafioWeb.Models;
 using DesafioWeb.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DesafioWeb.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PeopleController : ControllerBase
     {
         private readonly PeopleService _peopleService;
         private readonly CepService _cepService;
-        
         public PeopleController(PeopleService peopleService, CepService cepService)
         {
             _peopleService = peopleService;
             _cepService = cepService;
         }
-        
+
         [HttpGet]
         public ActionResult<List<Peoples>> Get() =>
             _peopleService.Get();

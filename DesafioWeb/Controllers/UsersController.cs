@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using DesafioWeb.Models;
 using DesafioWeb.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DesafioWeb.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly UserService _userService;
@@ -15,7 +17,6 @@ namespace DesafioWeb.Controllers
         {
             _userService = userService;
         }
-        
         [HttpGet]
         public ActionResult<List<Users>> Get() =>
             _userService.Get();

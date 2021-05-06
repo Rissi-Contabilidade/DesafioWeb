@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using DesafioWeb.Models;
 using DesafioWeb.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using RestSharp;
@@ -10,6 +11,7 @@ namespace DesafioWeb.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CepsController : ControllerBase
     {
         private readonly CepService _cepService;
