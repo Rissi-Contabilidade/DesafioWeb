@@ -60,7 +60,7 @@ Precisamos que você desenvolva uma API que cadastre, retorne, altere e exclua p
   "Sexo": "enum",
   "DataNascimento": "datetime",
   "Endereco": {
-    "Cep": "int",
+    "Cep": "long",
     "Complemento": "string",
     "Numero": "string"
   },
