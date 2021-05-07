@@ -26,7 +26,7 @@ namespace DesafioWeb.Models
         public DateTime DataNascimento { get; set; }
         
         [Required]
-        public Endereco Endereco { get; set; }
+        public Adress Endereco { get; set; }
 
         [Required]
         public long Telefone { get; set; }
@@ -39,15 +39,5 @@ namespace DesafioWeb.Models
         Masculino,
         [EnumMember(Value = "Feminino")]
         Feminino
-    }
-    
-    public class Endereco
-    {
-        public Ceps Cep { get; set; }
-        
-        public string Complemento { get; set; }
-        
-        public string Numero { get; set; }
-        
     }
 }

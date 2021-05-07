@@ -34,16 +34,28 @@ namespace DesafioWeb.Controllers
             return user;
         }
 
-        [HttpPost]
-        public ActionResult<Users> Create(Users user)
+        private bool VerifyUser(Users user)
         {
             var userFind = _userService.GetPerUser(user.User);
             if (userFind != null && user.User == userFind.User)
             {
-                return BadRequest("Error: Usuario já existe.");
+                return true;
             }
-            _userService.Create(user);
 
+            return false;
+        }
+
+        [HttpPost]
+        public ActionResult<Users> Create(Users user)
+        {
+            var userFound = VerifyUser(user);
+
+            if (userFound)
+            {
+                return BadRequest("Error: Usuário já existe!");
+            }
+            
+            _userService.Create(user);
             return CreatedAtRoute("GetUser", new { id = user.Id }, user);
         }
 
@@ -57,6 +69,7 @@ namespace DesafioWeb.Controllers
                 return NotFound();
             }
 
+            userIn.Id = id;
             _userService.Update(id, userIn);
 
             return NoContent();

@@ -48,21 +48,39 @@ namespace DesafioWeb.Controllers
             
             return user;
         }
+
+        private bool VerifyCep(Peoples people)
+        {
+            var cep = _cepService.Get(Convert.ToString(people.Endereco.Cep));
+            
+            if (cep != null)
+            {
+                people.Endereco.Cep = cep.Cep;
+                people.Endereco.Logradouro = cep.Logradouro;
+                people.Endereco.Bairro = cep.Bairro;
+                people.Endereco.Cidade = cep.Cidade;
+                people.Endereco.Estado = cep.Estado;
+
+                return true;
+            }
+
+            return false;
+        }
         
         [HttpPost]
         public ActionResult<Users> Create(Peoples people)
         {
             var peopleDb = GetPerCpf(people.Cpf.ToString());
-            var cep = _cepService.Get(Convert.ToString(people.Endereco.Cep.Cep));
 
             if (peopleDb.Value != null && people.Cpf == peopleDb.Value.Cpf)
             {
                 return BadRequest("Error: Já existe uma pessoa com esse cpf");
             }
+            
+            var cepValid = VerifyCep(people);
 
-            if (cep != null)
+            if (cepValid)
             {
-                people.Endereco.Cep = cep;
                 switch (people.Sexo)
                 {
                     case Sexo.Masculino:
@@ -75,25 +93,37 @@ namespace DesafioWeb.Controllers
                 _peopleService.Create(people);
                 return CreatedAtRoute("GetPeople", new { id = people.Id }, people);
             }
-            else
-            {
-                return BadRequest("Error: CEP não existe no banco");
-            }
+
+            return BadRequest("CEP não existe em nosso banco de dados.");
         }
         
         [HttpPut("{id:length(24)}")]
         public IActionResult Update(string id, Peoples peoplesIn)
         {
+            var peopleDb = GetPerCpf(peoplesIn.Cpf.ToString());
+
+            if (peopleDb.Value != null && peoplesIn.Cpf == peopleDb.Value.Cpf)
+            {
+                return BadRequest("Error: Já existe uma pessoa com esse cpf");
+            }
             var user = _peopleService.Get(id);
 
             if (user == null)
             {
                 return NotFound();
             }
+            var cepValid = VerifyCep(peoplesIn);
 
-            _peopleService.Update(id, peoplesIn);
+            if (cepValid)
+            {
+                peoplesIn.Id = id;
 
-            return NoContent();
+                _peopleService.Update(id, peoplesIn);
+                return Ok("Dados atualizados");
+
+            }
+            return BadRequest("CEP inexistente em nosso banco.");
+
         }
         
         [HttpDelete("{id:length(24)}")]

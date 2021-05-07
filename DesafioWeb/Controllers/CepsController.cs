@@ -4,6 +4,7 @@ using DesafioWeb.Models;
 using DesafioWeb.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 
@@ -14,10 +15,12 @@ namespace DesafioWeb.Controllers
     [Authorize]
     public class CepsController : ControllerBase
     {
+        private readonly IConfiguration _config;
         private readonly CepService _cepService;
 
-        public CepsController(CepService cepService)
+        public CepsController(CepService cepService, IConfiguration configuration)
         {
+            _config = configuration;
             _cepService = cepService;
         }
 
@@ -44,10 +47,11 @@ namespace DesafioWeb.Controllers
         [HttpGet("createOrUpdate")]
         public ActionResult<Ceps> CreateOrUpdate([FromQuery(Name = "cep")] string cep)
         {
+            var tokenApi = _config["APICEP:Token"];
             cep = cep.Replace("-", "").Replace(".", "");
             var client = new RestClient("https://www.cepaberto.com/api/v3/");
             var request = new RestRequest($"cep?cep={cep}");
-            request.AddHeader("Authorization", "Token token=5cef724ae2457c25a0072525a236bf5b");
+            request.AddHeader("Authorization", $"Token token={tokenApi}");
 
             var response = client.Get(request).Content;
             JObject json = JObject.Parse(response);
